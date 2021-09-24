@@ -1,0 +1,57 @@
+@import "../../colors.scss";
+
+.login {
+  display: grid;
+  width: 30%;
+  height: 40em;
+  margin: auto;
+  background: $gray;
+  border-radius: 4pt;
+  grid-template-columns: 100%;
+  grid-template-rows: 3fr 1fr 1fr 1fr 2fr;
+  justify-content: center;
+  text-align: center;
+}
+
+.login__h1 {
+  color: $orange;
+  font-size: 2.5em;
+}
+
+.login__input {
+  width: 60%;
+  height: 30%;
+  margin: auto auto 5% auto;
+  border-radius: 4pt;
+  border: none;
+}
+
+.login__input::placeholder {
+  padding-left: 8px;
+  color: #a2a2a2;
+  font-size: 1.2em;
+}
+
+.login__button {
+  background-color: $orange;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 4pt;
+  border: none;
+  width: 30%;
+  height: 60%;
+  margin: auto;
+  cursor: pointer;
+}
+
+.login__p {
+  color: white;
+  margin: 5% auto 5% auto;
+}
+
+.login__a {
+  text-decoration: none;
+  color: $orange;
+  font-size: 1.8em;
+  font-weight: 100;
+}
