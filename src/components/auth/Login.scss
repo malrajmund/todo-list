@@ -8,20 +8,26 @@
   background: $gray;
   border-radius: 4pt;
   grid-template-columns: 100%;
-  grid-template-rows: 3fr 1fr 1fr 1fr 2fr;
+  grid-template-rows: 4fr 1fr 1fr 1fr 2fr;
   justify-content: center;
   text-align: center;
 }
 
+.login__div {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
 .login__h1 {
   color: $orange;
-  font-size: 2.5em;
+  font-size: 3em;
 }
 
 .login__input {
   width: 60%;
-  height: 30%;
-  margin: auto auto 5% auto;
+  height: 40%;
+  margin: auto auto 10% auto;
   border-radius: 4pt;
   border: none;
 }
@@ -39,7 +45,7 @@
   border-radius: 4pt;
   border: none;
   width: 30%;
-  height: 60%;
+  height: 65%;
   margin: auto;
   cursor: pointer;
 }

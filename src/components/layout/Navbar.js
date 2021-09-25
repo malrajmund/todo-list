@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.scss";
-import logoutIcon from "../../utils/logout.svg";
+import logoutIcon from "../../resources/logout.svg";
+import { connect } from "react-redux";
 
 const Navbar = ({ isAuthenticated }) => {
   return (
@@ -15,4 +16,8 @@ const Navbar = ({ isAuthenticated }) => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Navbar);
