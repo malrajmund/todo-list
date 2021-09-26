@@ -1,0 +1,20 @@
+@import "../../colors.scss";
+
+.alert {
+  display: grid;
+  width: 35%;
+  height: 5%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 4pt;
+  grid-template-columns: 100%;
+  grid-template-rows: 4fr 1fr 1fr 1fr 2fr;
+  justify-content: center;
+  text-align: center;
+}
+.alert--danger {
+  background: rgb(240, 180, 180);
+  color: black;
+}

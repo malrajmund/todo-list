@@ -7,8 +7,10 @@ import {
   AUTH_ERROR,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  SET_ALERT,
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
+import { setAlert } from "./alert";
 
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
@@ -28,7 +30,6 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: AUTH_ERROR,
     });
-    console.log("blad loadowania");
   }
 };
 
@@ -56,7 +57,7 @@ export const login = (identifier, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
-    console.log("blad logowania");
+    dispatch(setAlert("Username or password is wrong!", "danger", 3000));
   }
 };
 

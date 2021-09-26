@@ -3,23 +3,63 @@ import { register } from "../../redux/actions/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./Register.scss";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const Register = ({ register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
+    password2: "",
   });
 
-  const { username, email, password } = formData;
+  const [errors, setError] = useState({
+    usernameError: "",
+    emailError: "",
+    passwordError: "",
+    password2Error: "",
+  });
+
+  const { username, email, password, password2 } = formData;
+  const { usernameError, emailError, passwordError, password2Error } = errors;
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleValidation = () => {
+    if (username.trim().length === 0) {
+      setError((errors) => ({ ...errors, usernameError: "Username is empty" }));
+    }
+    if (email.trim().length === 0) {
+      setError((errors) => ({ ...errors, emailError: "Email is empty" }));
+      console.log(errors);
+    }
+    if (password.trim().length === 0) {
+      setError((errors) => ({ ...errors, passwordError: "Password is empty" }));
+    }
+    if (password2.trim().length === 0) {
+      setError((errors) => ({
+        ...errors,
+        password2Error: "Repeat your password!",
+      }));
+    }
+    if (password !== password2) {
+      setError((errors) => ({
+        ...errors,
+        passwordError: "Passwords doesnt not match!",
+      }));
+    }
+    return errors;
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    register(formData);
+    setError({});
+    handleValidation();
+    if (!Object.values(errors).length) {
+      register(formData);
+    }
   };
 
   return (
@@ -28,19 +68,20 @@ const Register = ({ register, isAuthenticated }) => {
         <Redirect to='/ListWrapper' />
       ) : (
         <div className='register'>
-          <div
-            className='register__iconWrapper'
-            onClick={(e) => window.history.back()}
-          >
+          <Link className='register__iconWrapper' to='/'>
             <div className='register__icon'></div>
-          </div>
+          </Link>
           <h1 className='register__h1'>Create an new account</h1>
           <form
             className='register__inputWrapper'
             onSubmit={(e) => onSubmit(e)}
           >
             <input
-              className='register__input'
+              className={
+                usernameError
+                  ? "register__input register__input--error"
+                  : "register__input"
+              }
               type='text'
               placeholder='Username'
               name='username'
@@ -48,7 +89,11 @@ const Register = ({ register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             ></input>
             <input
-              className='register__input'
+              className={
+                emailError
+                  ? "register__input register__input--error"
+                  : "register__input"
+              }
               type='text'
               placeholder='Email'
               name='email'
@@ -56,7 +101,11 @@ const Register = ({ register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             ></input>
             <input
-              className='register__input'
+              className={
+                passwordError
+                  ? "register__input register__input--error"
+                  : "register__input"
+              }
               type='password'
               placeholder='Password'
               name='password'
@@ -64,10 +113,18 @@ const Register = ({ register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             ></input>
             <input
-              className='register__input'
+              className={
+                password2Error
+                  ? "register__input register__input--error"
+                  : "register__input"
+              }
               type='password'
               placeholder='Repeat password'
+              value={password2}
+              name='password2'
+              onChange={(e) => onChange(e)}
             ></input>
+            {}
             <button className='register__button' type='submit'>
               Create
             </button>

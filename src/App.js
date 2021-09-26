@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./redux/utils/setAuthToken";
+import Alert from "./components/layout/Alert";
 
 const App = () => {
   useEffect(() => {
@@ -23,8 +24,9 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Navbar />
+        <Alert />
         <Switch>
-          <Route exact path='/login' component={Login} />
+          <Route exact path='/' component={Login} />
           <Route exact path='/register' component={Register} />
           <PrivateRoute exact path='/ListWrapper' component={ListWrapper} />
         </Switch>

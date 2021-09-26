@@ -5,18 +5,54 @@ import { login } from "../../redux/actions/auth";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { setAlert } from "../../redux/actions/alert";
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, setAlert, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
   });
 
+  const [errors, setError] = useState({
+    identifierError: "",
+    passwordError: "",
+  });
+
+  const { identifierError, passwordError } = errors;
   const { identifier, password } = formData;
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleValidation = () => {
+    if (identifier.trim().length === 0) {
+      setError((errors) => ({
+        ...errors,
+        identifierError: "Username is empty",
+      }));
+      setAlert("Username is empty", "danger", 3000);
+    }
+    if (password.trim().length === 0) {
+      setError((errors) => ({ ...errors, passwordError: "Password is empty" }));
+      setAlert("Password is empty", "danger", 3000);
+    }
+    return errors;
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+    setError({});
+    handleValidation();
+
+    Object.values(errors).forEach((value, i, array) => {
+      if (value !== "" || array.length > 0) {
+        return null;
+      }
+      console.log(i, array.length);
+      if (i === array.length) {
+      }
+    });
+
     login(identifier, password);
   };
 
@@ -30,7 +66,7 @@ const Login = ({ login, isAuthenticated }) => {
           <form onSubmit={(e) => onSubmit(e)} className='login__div'>
             <input
               className={
-                isAuthenticated === false
+                identifierError
                   ? "login__input login__input--error"
                   : "login__input"
               }
@@ -42,7 +78,7 @@ const Login = ({ login, isAuthenticated }) => {
             ></input>
             <input
               className={
-                isAuthenticated === false
+                passwordError
                   ? "login__input login__input--error"
                   : "login__input"
               }
@@ -68,6 +104,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
@@ -75,4 +112,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, setAlert })(Login);
