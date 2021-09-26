@@ -10,8 +10,6 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./redux/actions/auth";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import setAuthToken from "./redux/utils/setAuthToken";
 
 const App = () => {
@@ -26,7 +24,7 @@ const App = () => {
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path='/' component={Login} />
+          <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           <PrivateRoute exact path='/ListWrapper' component={ListWrapper} />
         </Switch>

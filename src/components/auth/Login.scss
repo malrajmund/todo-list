@@ -1,4 +1,5 @@
 @import "../../colors.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
 
 .login {
   display: grid;
@@ -22,19 +23,31 @@
 .login__h1 {
   color: $orange;
   font-size: 3em;
+  font-family: "Roboto", sans-serif;
 }
 
 .login__input {
   width: 60%;
-  height: 40%;
-  margin: auto auto 10% auto;
+  height: 50%;
+  margin: auto auto 7% auto;
   border-radius: 4pt;
   border: none;
+  outline: none;
+}
+.login__input--error {
+  border: 1pt solid red;
+  background-color: rgb(243, 146, 146);
 }
 
 .login__input::placeholder {
   padding-left: 8px;
   color: #a2a2a2;
+  font-size: 1.2em;
+}
+
+.login__input--error::placeholder {
+  padding-left: 8px;
+  color: white;
   font-size: 1.2em;
 }
 

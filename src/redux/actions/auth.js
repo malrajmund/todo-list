@@ -1,5 +1,13 @@
 import axios from "axios";
-import { LOGIN_SUCCESS, USER_LOADED, LOGOUT } from "./types";
+import {
+  LOGIN_SUCCESS,
+  USER_LOADED,
+  LOGOUT,
+  LOGIN_FAIL,
+  AUTH_ERROR,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
+} from "./types";
 import setAuthToken from "../utils/setAuthToken";
 
 export const loadUser = () => async (dispatch) => {
@@ -17,9 +25,9 @@ export const loadUser = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    /*dispatch({
-          type: AUTH_ERROR,
-        });*/
+    dispatch({
+      type: AUTH_ERROR,
+    });
     console.log("blad loadowania");
   }
 };
@@ -45,14 +53,9 @@ export const login = (identifier, password) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    /*const errors = error.response.data.errors;
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
-      }
-  
-      dispatch({
-        type: LOGIN_FAIL,
-      });*/
+    dispatch({
+      type: LOGIN_FAIL,
+    });
     console.log("blad logowania");
   }
 };
@@ -64,4 +67,33 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+};
+
+export const register = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify(formData);
+
+  try {
+    const res = await axios.post(
+      "https://recruitment.ultimate.systems/auth/local/register",
+      body,
+      config
+    );
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: err.message,
+    });
+    console.log(err.message);
+  }
 };

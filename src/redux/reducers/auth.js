@@ -3,12 +3,15 @@ import {
   USER_LOADED,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
+  error: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -22,14 +25,15 @@ export default function authReducer(state = initialState, action) {
         loading: false,
       };
     case LOGIN_SUCCESS:
+    case REGISTER_SUCCESS:
       localStorage.setItem("token", payload.jwt);
       return {
         ...state,
-        ...payload,
         token: payload.jwt,
         isAuthenticated: true,
         loading: false,
       };
+    case REGISTER_FAIL:
     case LOGIN_FAIL:
     case LOGOUT:
       localStorage.removeItem("token");
@@ -38,6 +42,7 @@ export default function authReducer(state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
+        error: payload,
       };
     default:
       return state;
