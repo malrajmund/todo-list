@@ -1,0 +1,32 @@
+@import "../../colors.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+
+.ListWrapper {
+  display: grid;
+  width: 50%;
+  height: 40em;
+  margin: auto;
+  background: $darkGray;
+  color: white;
+  border-radius: 4pt;
+  grid-template-columns: 100%;
+  grid-template-rows: 1fr 8fr;
+}
+.ListWrapper__input {
+  width: 30%;
+  height: 20%;
+  margin: auto auto 4% auto;
+  border-radius: 2pt;
+  border: none;
+  padding: 5px;
+}
+
+.ListWrapper__select {
+  width: 15%;
+  height: 35%;
+  margin: auto auto 4% auto;
+  float: right;
+  border-radius: 2pt;
+  border: none;
+  padding: 5px;
+}

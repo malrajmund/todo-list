@@ -70,6 +70,7 @@
   background-color: white;
   position: relative;
   margin: 0 auto;
+  z-index: 9;
   &:before,
   &:after {
     width: 10px;

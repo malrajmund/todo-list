@@ -7,7 +7,6 @@ import {
   AUTH_ERROR,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
-  SET_ALERT,
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
@@ -68,6 +67,7 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+  dispatch(setAlert("Logout successfull!", "danger", 3000));
 };
 
 export const register = (formData) => async (dispatch) => {
@@ -95,6 +95,6 @@ export const register = (formData) => async (dispatch) => {
       type: REGISTER_FAIL,
       payload: err.message,
     });
-    console.log(err.message);
+    dispatch(setAlert("Register failed!", "danger", 3000));
   }
 };

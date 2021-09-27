@@ -57,9 +57,7 @@ const Register = ({ register, isAuthenticated }) => {
     e.preventDefault();
     setError({});
     handleValidation();
-    if (!Object.values(errors).length) {
-      register(formData);
-    }
+    register(formData);
   };
 
   return (
@@ -71,7 +69,7 @@ const Register = ({ register, isAuthenticated }) => {
           <Link className='register__iconWrapper' to='/'>
             <div className='register__icon'></div>
           </Link>
-          <h1 className='register__h1'>Create an new account</h1>
+          <h1 className='register__h1'>Create a new account</h1>
           <form
             className='register__inputWrapper'
             onSubmit={(e) => onSubmit(e)}
