@@ -3,15 +3,81 @@
 
 .ListModal {
   display: grid;
-  width: 100%;
-  height: 60px;
+  width: 50%;
   margin: auto;
   background: $gray;
   color: white;
   border-radius: 4pt;
   grid-template-columns: 100%;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr 8fr;
   pointer-events: none;
   opacity: 0;
   position: absolute;
+}
+
+.ListModal--open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ListModal__input {
+  height: 20px;
+  width: 90%;
+  margin: 20px auto 20px auto;
+}
+.ListModal__line {
+  background-color: $orange;
+  height: 2px;
+  width: 95%;
+  margin: 20px auto auto auto;
+}
+
+.ListModal__taskName {
+  width: 95%;
+  height: 20px;
+  background-color: $gray;
+  outline: none;
+  border: none;
+  color: white;
+  border-bottom: 1pt solid $orange;
+  font-size: 18px;
+}
+
+.ListModal__tasks {
+  width: 100%;
+  height: 100%;
+}
+
+.ListModal__checkbox {
+  width: 15px;
+}
+
+.ListModal__button {
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 100px;
+  height: 44px;
+  font-size: 22px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.ListModal__button--darkOrange {
+  background-color: $darkOrange;
+  float: right;
+}
+
+.ListModal__button--orange {
+  background-color: $orange;
+  float: right;
+}
+
+.ListModal__button--gray {
+  color: $orange;
+  background-color: $gray;
+}
+
+.ListModal__task {
+  margin: 0px 20px 20px 20px;
 }
