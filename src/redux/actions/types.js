@@ -10,6 +10,6 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 export const CREATE_LIST = "CREATE_LIST";
 export const EDIT_LIST = "EDIT_LIST";
 export const DELETE_LIST = "DELETE_LIST";
-export const ADD_TASK = "ADD_TASK";
 export const LIST_ERROR = "LIST_ERROR";
 export const GET_LISTS = "GET_LISTS";
+export const SORT_LISTS = "SORT_LISTS";

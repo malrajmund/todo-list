@@ -3,9 +3,9 @@ import {
   CREATE_LIST,
   EDIT_LIST,
   DELETE_LIST,
-  ADD_TASK,
   LIST_ERROR,
   GET_LISTS,
+  SORT_LISTS,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -28,11 +28,12 @@ export const createList = (listData) => async (dispatch) => {
       type: CREATE_LIST,
       payload: res.data,
     });
+    dispatch(setAlert("List created!", "success", 3000));
   } catch (err) {
     dispatch({
       type: LIST_ERROR,
     });
-    dispatch(setAlert("Creating new list gone wrong!", "danger", 3000));
+    dispatch(setAlert(err.message, "danger", 3000));
   }
 };
 
@@ -47,11 +48,87 @@ export const getLists = () => async (dispatch) => {
       "https://recruitment.ultimate.systems/to-do-lists",
       config
     );
-    console.log(res.data);
     dispatch({
       type: GET_LISTS,
       payload: res.data,
     });
+  } catch (err) {
+    dispatch({
+      type: LIST_ERROR,
+    });
+    dispatch(setAlert(err.message, "danger", 3000));
+  }
+};
+
+export const editList = (id, listData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const { name } = listData;
+  const task = listData.task.map(({ id, ...rest }) => rest);
+  const body = JSON.stringify({ name, task });
+  try {
+    const res = await axios.put(
+      `https://recruitment.ultimate.systems/to-do-lists/${id}`,
+      body,
+      config
+    );
+    dispatch({
+      type: EDIT_LIST,
+      payload: res.data,
+    });
+    dispatch(setAlert("List edited!", "success", 3000));
+  } catch (err) {
+    dispatch({
+      type: LIST_ERROR,
+    });
+    dispatch(setAlert(err.message, "danger", 3000));
+  }
+};
+
+export const deleteList = (id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.delete(
+      `https://recruitment.ultimate.systems/to-do-lists/${id}`,
+      config
+    );
+    dispatch({
+      type: DELETE_LIST,
+      payload: res.data,
+    });
+    dispatch(setAlert("List deleted!", "info", 3000));
+  } catch (err) {
+    dispatch({
+      type: LIST_ERROR,
+    });
+    dispatch(setAlert(err.message, "danger", 3000));
+  }
+};
+
+export const sortLists = (option) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.get(
+      `https://recruitment.ultimate.systems/to-do-lists?_sort=${option}`,
+      config
+    );
+    console.log(res.data);
+    dispatch({
+      type: SORT_LISTS,
+      payload: res.data,
+    });
+    dispatch(setAlert("List sorted!", "info", 3000));
   } catch (err) {
     dispatch({
       type: LIST_ERROR,

@@ -8,14 +8,25 @@
   z-index: 10;
   left: 0;
   right: 0;
-  margin: auto;
+  margin: 25% auto;
   border-radius: 4pt;
   grid-template-columns: 100%;
-  grid-template-rows: 4fr 1fr 1fr 1fr 2fr;
+  grid-template-rows: 50%;
   justify-content: center;
   text-align: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .alert--danger {
   background: rgb(240, 180, 180);
+  color: black;
+}
+
+.alert--success {
+  background: lightgreen;
+  color: black;
+}
+
+.alert--info {
+  background: lightblue;
   color: black;
 }

@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import "./ListModal.scss";
-import { createList } from "../../redux/actions/list";
+import { createList, editList, deleteList } from "../../redux/actions/list";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const ListModal = ({ name, tasks, className, createList, handler }) => {
+const ListModal = ({
+  name,
+  tasks,
+  createList,
+  editList,
+  deleteList,
+  handler,
+  id,
+}) => {
   const [listData, setListData] = useState({
     name: name,
     task: tasks ? [...tasks] : [],
   });
 
   const [newTask, setNewTask] = useState({
+    id: Math.random(),
     name: "",
     isDone: false,
   });
@@ -18,22 +27,23 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
   const addTask = (e) => {
     e.preventDefault();
     if (listData.task.length > 0) {
-      setListData({ name, task: [...listData.task, newTask] });
+      setListData({ ...listData, task: [...listData.task, newTask] });
     } else {
-      setListData({ name, task: [newTask] });
+      setListData({ ...listData, task: [newTask] });
     }
   };
 
-  const removeTask = (e) => {
+  const onChange = (e, index) => {
     e.preventDefault();
-    console.log(listData.task);
-    const data = listData.task.splice(-1);
-    console.log(data);
-    if (listData.task.length > 0) {
-      setListData({ name, task: [...data] });
+    let newArray = [...listData.task];
+    console.log(newArray);
+    if (e.target.type === "checkbox") {
+      newArray[index].isDone = e.target.checked;
     } else {
-      return null;
+      newArray[index].name = e.target.value;
     }
+    setListData({ name: listData.name, task: [...newArray] });
+    console.log(listData);
   };
 
   return (
@@ -41,7 +51,7 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
       <input
         className='ListModal__input'
         name='name'
-        value={listData.name ? listData.name : "List name"}
+        value={listData.name}
         onChange={(e) =>
           setListData({ ...listData, [e.target.name]: e.target.value })
         }
@@ -49,17 +59,22 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
       <div className='ListModal__line'></div>
       <div className='ListModal__tasks'>
         {listData.task ? (
-          listData.task.map((item) => (
-            <div className='ListModal__task' key={item.name}>
+          listData.task.map((item, index) => (
+            <div className='ListModal__task' key={item.id}>
               <input
                 type='checkbox'
-                defaultChecked={item.isDone}
+                name='isDone'
+                key={Math.random()}
+                checked={item.isDone}
                 className='ListModal__checkbox'
+                onChange={(e) => onChange(e, index)}
               ></input>
               <input
                 type='text'
+                name='name'
                 className='ListModal__taskName'
-                defaultValue={item.name}
+                value={item.name}
+                onChange={(e) => onChange(e, index)}
               ></input>
             </div>
           ))
@@ -89,6 +104,9 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
           <div>
             <button
               className='ListModal__button ListModal__button--orange'
+              disabled={
+                newTask.name === "" || newTask.name.length <= 0 ? true : false
+              }
               onClick={(e) => {
                 addTask(e);
                 setNewTask({ name: "", isDone: false });
@@ -99,8 +117,8 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
             </button>
             <button
               onClick={(e) => {
-                removeTask(e);
                 setNewTask({ name: "", isDone: false });
+                e.preventDefault();
               }}
               className='ListModal__button ListModal__button--darkOrange'
             >
@@ -118,9 +136,26 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
         </button>
         <button
           className='ListModal__button ListModal__button--orange'
-          onClick={(e) => createList(listData)}
+          onClick={(e) => {
+            id ? editList(id, listData) : createList(listData);
+            handler();
+          }}
+          disabled={
+            listData.task.length === 0 || listData.name.length <= 0
+              ? true
+              : false
+          }
         >
           SAVE
+        </button>
+        <button
+          className='ListModal__button ListModal__button--darkOrange'
+          onClick={(e) => {
+            deleteList(id);
+            handler();
+          }}
+        >
+          DELETE
         </button>
       </div>
     </div>
@@ -129,6 +164,8 @@ const ListModal = ({ name, tasks, className, createList, handler }) => {
 
 ListModal.propTypes = {
   createList: PropTypes.func.isRequired,
+  editList: PropTypes.func.isRequired,
+  deleteList: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createList })(ListModal);
+export default connect(null, { createList, editList, deleteList })(ListModal);

@@ -4,7 +4,6 @@
 .ListWrapper {
   display: grid;
   width: 50%;
-  height: 40em;
   margin: auto;
   background: $darkGray;
   color: white;
@@ -12,6 +11,7 @@
   grid-template-columns: 100%;
   grid-template-rows: 1fr repeat(1fr);
 }
+
 .ListWrapper__input {
   width: 30%;
   height: 20px;
@@ -34,11 +34,12 @@
 .ListWrapper__addButton {
   background-color: white;
   position: absolute;
+  z-index: 1;
   border-radius: 100%;
   width: 52px;
   height: 52px;
-  top: 75%;
-  left: 72%;
+  right: 25%;
+  bottom: 0;
   cursor: pointer;
   &:before,
   &:after {
@@ -56,4 +57,62 @@
   &:after {
     transform: rotate(180deg);
   }
+}
+
+/*.ListWrapper__loading {
+  background-color: $orange;
+  width: 100px;
+  height: 100px;
+ 
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  &:after {
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    background-color: $darkGray;
+    display: block;
+    content: "";
+    border: 6px solid $darkGray;
+    border-color: $darkGray transparent $darkGray transparent;
+    animation: loading 1500ms linear infinite;
+  }
+}*/
+
+.ListWrapper__loading {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  margin: 200px auto;
+}
+.ListWrapper__loading:after {
+  content: " ";
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid $orange;
+  border-color: $orange transparent $orange transparent;
+  animation: loading 1.2s linear infinite;
+}
+
+@keyframes loading {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.ListWrapper__info {
+  color: $orange;
+  background-color: $darkGray;
+  text-align: center;
+  font-weight: 600;
 }

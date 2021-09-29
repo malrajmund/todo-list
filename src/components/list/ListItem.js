@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ListModal from "./ListModal";
 import "./ListItem.scss";
 
-const ListItem = ({ name, createdAt, completed, uncompleted, tasks }) => {
+const ListItem = ({ name, createdAt, completed, uncompleted, tasks, id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -11,7 +11,9 @@ const ListItem = ({ name, createdAt, completed, uncompleted, tasks }) => {
     <>
       <div className='ListItem' onClick={toggleModal}>
         <div className='ListItem__name'>{name}</div>
-        <div className='ListItem__date'>{"Created at: " + createdAt}</div>
+        <div className='ListItem__date'>
+          {"Created at: " + createdAt.substr(0, 19).replace("T", " ")}
+        </div>
         <div className='ListItem__wrapper'>
           <div className='ListItem__completed'>{"Completed: " + completed}</div>
           <div className='ListItem__uncompleted'>
@@ -23,7 +25,12 @@ const ListItem = ({ name, createdAt, completed, uncompleted, tasks }) => {
         </div>
       </div>
       {isModalOpen ? (
-        <ListModal tasks={tasks} handler={toggleModal}></ListModal>
+        <ListModal
+          id={id}
+          name={name}
+          tasks={tasks}
+          handler={toggleModal}
+        ></ListModal>
       ) : null}
     </>
   );
