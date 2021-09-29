@@ -26,9 +26,13 @@ const App = () => {
         <Navbar />
         <Alert />
         <Switch>
-          <Route exact path='/' component={Login} />
-          <Route exact path='/register' component={Register} />
-          <PrivateRoute exact path='/ListWrapper' component={ListWrapper} />
+          <Route exact path='/todo-list' component={Login} />
+          <Route exact path='/todo-list/register' component={Register} />
+          <PrivateRoute
+            exact
+            path='/todo-list/ListWrapper'
+            component={ListWrapper}
+          />
         </Switch>
       </Router>
     </Provider>

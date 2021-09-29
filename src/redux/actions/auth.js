@@ -15,7 +15,6 @@ export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
-  console.log(localStorage.token);
   try {
     const res = await axios.get(
       "https://recruitment.ultimate.systems/users/me"
@@ -56,13 +55,14 @@ export const login = (identifier, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
-    dispatch(setAlert("Username or password is wrong!", "danger", 3000));
+    dispatch(setAlert(err.message, "danger", 3000));
   }
 };
 
 export const logout = () => (dispatch) => {
   if (localStorage.token) {
     localStorage.removeItem("token");
+    setAuthToken();
   }
   dispatch({
     type: LOGOUT,
@@ -70,21 +70,22 @@ export const logout = () => (dispatch) => {
   dispatch(setAlert("Logout successfull!", "danger", 3000));
 };
 
-export const register = (formData) => async (dispatch) => {
+export const register = (username, email, password) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json; charset=utf-8",
     },
   };
 
-  const body = JSON.stringify(formData);
-
+  const body = JSON.stringify(username, email, password);
+  console.log(body);
   try {
     const res = await axios.post(
       "https://recruitment.ultimate.systems/auth/local/register",
       body,
       config
     );
+    console.log("res:" + res);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -95,6 +96,7 @@ export const register = (formData) => async (dispatch) => {
       type: REGISTER_FAIL,
       payload: err.message,
     });
-    dispatch(setAlert("Register failed!", "danger", 3000));
+    console.log(err.response);
+    dispatch(setAlert(err.message, "danger", 3000));
   }
 };

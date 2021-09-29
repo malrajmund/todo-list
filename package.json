@@ -1,5 +1,5 @@
 {
-  "homepage": "http://malrajmund.github.io/todo-list",
+  "homepage": "http://www.rajmundmaleclist.pl/todo-list",
   "name": "todo-list",
   "version": "0.1.0",
   "private": true,
@@ -16,7 +16,7 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
-    "redux-devtools-extension": "^2.13.9",
+    
     "redux-thunk": "^2.3.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "redux-devtools-extension": "^2.13.9"
   }
 }

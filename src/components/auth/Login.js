@@ -13,63 +13,27 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
     password: "",
   });
 
-  const [errors, setError] = useState({
-    identifierError: "",
-    passwordError: "",
-  });
-
-  const { identifierError, passwordError } = errors;
   const { identifier, password } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleValidation = () => {
-    if (identifier.trim().length === 0) {
-      setError((errors) => ({
-        ...errors,
-        identifierError: "Username is empty",
-      }));
-      setAlert("Username is empty", "danger", 3000);
-    }
-    if (password.trim().length === 0) {
-      setError((errors) => ({ ...errors, passwordError: "Password is empty" }));
-      setAlert("Password is empty", "danger", 3000);
-    }
-    return errors;
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
-    setError({});
-    handleValidation();
-
-    Object.values(errors).forEach((value, i, array) => {
-      if (value !== "" || array.length > 0) {
-        return null;
-      }
-      console.log(i, array.length);
-      if (i === array.length) {
-      }
-    });
-
+    console.log(formData);
     login(identifier, password);
   };
 
   return (
     <>
       {isAuthenticated ? (
-        <Redirect to='/ListWrapper' />
+        <Redirect to='/todo-list/ListWrapper' />
       ) : (
         <div className='login'>
           <h1 className='login__h1'>Login</h1>
           <form onSubmit={(e) => onSubmit(e)} className='login__div'>
             <input
-              className={
-                identifierError
-                  ? "login__input login__input--error"
-                  : "login__input"
-              }
+              className={"login__input"}
               type='text'
               value={identifier}
               name='identifier'
@@ -77,11 +41,7 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
               placeholder='Email or Username'
             ></input>
             <input
-              className={
-                passwordError
-                  ? "login__input login__input--error"
-                  : "login__input"
-              }
+              className={"login__input"}
               type='password'
               value={password}
               name='password'
@@ -93,7 +53,7 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
             </button>
           </form>
           <p className='login__p'>or</p>
-          <Link to='/register' className='login__a'>
+          <Link to='/todo-list/register' className='login__a'>
             create an account
           </Link>
         </div>

@@ -13,60 +13,24 @@ const Register = ({ register, isAuthenticated }) => {
     password2: "",
   });
 
-  const [errors, setError] = useState({
-    usernameError: "",
-    emailError: "",
-    passwordError: "",
-    password2Error: "",
-  });
-
   const { username, email, password, password2 } = formData;
-  const { usernameError, emailError, passwordError, password2Error } = errors;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleValidation = () => {
-    if (username.trim().length === 0) {
-      setError((errors) => ({ ...errors, usernameError: "Username is empty" }));
-    }
-    if (email.trim().length === 0) {
-      setError((errors) => ({ ...errors, emailError: "Email is empty" }));
-      console.log(errors);
-    }
-    if (password.trim().length === 0) {
-      setError((errors) => ({ ...errors, passwordError: "Password is empty" }));
-    }
-    if (password2.trim().length === 0) {
-      setError((errors) => ({
-        ...errors,
-        password2Error: "Repeat your password!",
-      }));
-    }
-    if (password !== password2) {
-      setError((errors) => ({
-        ...errors,
-        passwordError: "Passwords doesnt not match!",
-      }));
-    }
-    return errors;
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
-    setError({});
-    handleValidation();
-    register(formData);
+    register({ username, email, password });
   };
 
   return (
     <>
       {isAuthenticated ? (
-        <Redirect to='/ListWrapper' />
+        <Redirect to='/todo-list/ListWrapper' />
       ) : (
         <div className='register'>
-          <Link className='register__iconWrapper' to='/'>
+          <Link className='register__iconWrapper' to='/todo-list'>
             <div className='register__icon'></div>
           </Link>
           <h1 className='register__h1'>Create a new account</h1>
@@ -75,11 +39,7 @@ const Register = ({ register, isAuthenticated }) => {
             onSubmit={(e) => onSubmit(e)}
           >
             <input
-              className={
-                usernameError
-                  ? "register__input register__input--error"
-                  : "register__input"
-              }
+              className={"register__input"}
               type='text'
               placeholder='Username'
               name='username'
@@ -87,11 +47,7 @@ const Register = ({ register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             ></input>
             <input
-              className={
-                emailError
-                  ? "register__input register__input--error"
-                  : "register__input"
-              }
+              className={"register__input"}
               type='text'
               placeholder='Email'
               name='email'
@@ -99,11 +55,7 @@ const Register = ({ register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             ></input>
             <input
-              className={
-                passwordError
-                  ? "register__input register__input--error"
-                  : "register__input"
-              }
+              className={"register__input"}
               type='password'
               placeholder='Password'
               name='password'
@@ -111,11 +63,7 @@ const Register = ({ register, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             ></input>
             <input
-              className={
-                password2Error
-                  ? "register__input register__input--error"
-                  : "register__input"
-              }
+              className={"register__input"}
               type='password'
               placeholder='Repeat password'
               value={password2}
