@@ -3,6 +3,7 @@ import "./ListModal.scss";
 import { createList, editList, deleteList } from "../../redux/actions/list";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { setAlert } from "../../redux/actions/alert";
 
 const ListModal = ({
   name,
@@ -10,6 +11,7 @@ const ListModal = ({
   createList,
   editList,
   deleteList,
+  setAlert,
   handler,
   id,
 }) => {
@@ -154,6 +156,7 @@ const ListModal = ({
             deleteList(id);
             handler();
           }}
+          disabled={!tasks ? true : false}
         >
           DELETE
         </button>
@@ -166,6 +169,9 @@ ListModal.propTypes = {
   createList: PropTypes.func.isRequired,
   editList: PropTypes.func.isRequired,
   deleteList: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createList, editList, deleteList })(ListModal);
+export default connect(null, { createList, editList, deleteList, setAlert })(
+  ListModal
+);

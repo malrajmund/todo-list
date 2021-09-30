@@ -55,29 +55,22 @@ export const login = (identifier, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
-    dispatch(setAlert(err.message, "danger", 3000));
-  }
-};
 
-export const logout = () => (dispatch) => {
-  if (localStorage.token) {
-    localStorage.removeItem("token");
-    setAuthToken();
+    dispatch(
+      setAlert(err.response.data.message[0].messages[0].message, "danger", 3000)
+    );
   }
-  dispatch({
-    type: LOGOUT,
-  });
-  dispatch(setAlert("Logout successfull!", "danger", 3000));
 };
 
 export const register = (username, email, password) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
   };
 
   const body = JSON.stringify(username, email, password);
+  console.log(body);
   try {
     const res = await axios.post(
       "https://recruitment.ultimate.systems/auth/local/register",
@@ -94,7 +87,20 @@ export const register = (username, email, password) => async (dispatch) => {
       type: REGISTER_FAIL,
       payload: err.message,
     });
-    err.response ? console.log(err.response) : console.log(err.message);
-    dispatch(setAlert(err.message, "danger", 3000));
+    console.log(err.response.data.message[0].messages);
+    dispatch(
+      setAlert(err.response.data.message[0].messages[0].message, "danger", 3000)
+    );
   }
+};
+
+export const logout = () => (dispatch) => {
+  if (localStorage.token) {
+    localStorage.removeItem("token");
+    setAuthToken();
+  }
+  dispatch({
+    type: LOGOUT,
+  });
+  dispatch(setAlert("Logout successfull!", "info", 3000));
 };

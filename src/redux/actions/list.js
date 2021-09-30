@@ -23,12 +23,11 @@ export const createList = (listData) => async (dispatch) => {
       body,
       config
     );
-    console.log(res.data);
     dispatch({
       type: CREATE_LIST,
       payload: res.data,
     });
-    dispatch(setAlert("List created!", "success", 3000));
+    dispatch(setAlert(`List "${res.data.name}" created!`, "success", 3000));
   } catch (err) {
     dispatch({
       type: LIST_ERROR,
@@ -79,7 +78,7 @@ export const editList = (id, listData) => async (dispatch) => {
       type: EDIT_LIST,
       payload: res.data,
     });
-    dispatch(setAlert("List edited!", "success", 3000));
+    dispatch(setAlert(`List "${res.data.name}" edited!`, "success", 3000));
   } catch (err) {
     dispatch({
       type: LIST_ERROR,
@@ -103,7 +102,7 @@ export const deleteList = (id) => async (dispatch) => {
       type: DELETE_LIST,
       payload: res.data,
     });
-    dispatch(setAlert("List deleted!", "info", 3000));
+    dispatch(setAlert(`List "${res.data.name}" deleted!`, "info", 3000));
   } catch (err) {
     dispatch({
       type: LIST_ERROR,
@@ -123,12 +122,11 @@ export const sortLists = (option) => async (dispatch) => {
       `https://recruitment.ultimate.systems/to-do-lists?_sort=${option}`,
       config
     );
-    console.log(res.data);
     dispatch({
       type: SORT_LISTS,
       payload: res.data,
     });
-    dispatch(setAlert("List sorted!", "info", 3000));
+    dispatch(setAlert(`List sorted by ${option}!`, "info", 3000));
   } catch (err) {
     dispatch({
       type: LIST_ERROR,

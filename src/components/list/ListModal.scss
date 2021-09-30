@@ -51,7 +51,37 @@
 }
 
 .ListModal__checkbox {
-  width: 15px;
+  width: 25px;
+  background-color: $darkGray;
+  color: red;
+  visibility: hidden;
+  &:before {
+    display: block;
+    content: "";
+    width: 15px;
+    height: 15px;
+    visibility: visible;
+    background-color: $gray;
+    border: 2pt solid black;
+    position: absolute;
+  }
+  &:checked:after {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 6px;
+    height: 20px;
+    visibility: visible;
+    background-color: transparent;
+    border-right: 3pt solid $green;
+    border-bottom: 3pt solid $green;
+    transform: rotate(45deg);
+    margin-left: 10px;
+    margin-top: -5px;
+  }
+  &:checked:before {
+    border: 2pt solid $green;
+  }
 }
 
 .ListModal__button {
@@ -63,6 +93,10 @@
   font-size: 22px;
   margin: 20px;
   cursor: pointer;
+  &:disabled {
+    background-color: rgb(247, 205, 127);
+    cursor: initial;
+  }
 }
 
 .ListModal__button--darkOrange {

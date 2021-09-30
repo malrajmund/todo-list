@@ -39,18 +39,6 @@ const ListWrapper = ({
     return type === "completed" ? completed : uncompleted;
   };
 
-  /* const sortOption = (option, a, b) => {
-    if (option === "Name") {
-      if (a.firstname < b.firstname) {
-        return -1;
-      }
-      if (a.firstname > b.firstname) {
-        return 1;
-      }
-      return 0;
-    }
-  };*/
-
   useEffect(() => {
     if (!auth.loading) {
       getLists();
@@ -77,7 +65,7 @@ const ListWrapper = ({
           }}
         >
           {selectType.map((item) => (
-            <option value={item}>{item}</option>
+            <option value={item}>{item.replace("_", " ")}</option>
           ))}
         </select>
       </div>
