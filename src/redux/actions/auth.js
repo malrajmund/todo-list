@@ -73,19 +73,17 @@ export const logout = () => (dispatch) => {
 export const register = (username, email, password) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
+      "Content-Type": "application/json",
     },
   };
 
   const body = JSON.stringify(username, email, password);
-  console.log(body);
   try {
     const res = await axios.post(
       "https://recruitment.ultimate.systems/auth/local/register",
       body,
       config
     );
-    console.log("res:" + res);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -96,7 +94,7 @@ export const register = (username, email, password) => async (dispatch) => {
       type: REGISTER_FAIL,
       payload: err.message,
     });
-    console.log(err.response);
+    err.response ? console.log(err.response) : console.log(err.message);
     dispatch(setAlert(err.message, "danger", 3000));
   }
 };

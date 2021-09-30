@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { setAlert } from "../../redux/actions/alert";
 
-const Login = ({ login, setAlert, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
@@ -20,7 +20,6 @@ const Login = ({ login, setAlert, isAuthenticated }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     login(identifier, password);
   };
 
